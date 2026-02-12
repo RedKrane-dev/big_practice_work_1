@@ -1,4 +1,3 @@
-# 2
 def calculate_average(grades: list[int]) -> float:
     """
     Принимает список оценок студента и возвращает среднее значение
@@ -6,7 +5,6 @@ def calculate_average(grades: list[int]) -> float:
     result = sum(grades) / len(grades)
     return round(result, 2)
 
-# 3
 def performance_assessment(average_grade: float) -> str:
     """
     - Принимает средний балл студента
@@ -16,7 +14,6 @@ def performance_assessment(average_grade: float) -> str:
         return 'Успешен'
     return 'Не успешен'
 
-# 2
 def calculate_average_all_students(all_students_list: list[dict[str: str, str: list[int]]]) -> float:
     """
     - Получает список всех студентов
@@ -26,4 +23,40 @@ def calculate_average_all_students(all_students_list: list[dict[str: str, str: l
     for student in all_students_list:
         all_students_grades += student['grades']
     result = sum(all_students_grades) / len(all_students_grades)
+
+    print(f'Средний балл всех студентов:\n{round(result, 2)}\n')
     return round(result, 2)
+
+def get_student_info(student_name: str, avg_grade: float, performance: str) -> str:
+    """
+    Принимает данные студента, оформляет и отдает их единой строкой
+    """
+    return (f'Студент: {student_name}\n'
+            f'Средний балл: {avg_grade}\n'
+            f'Статус: {performance}\n')
+
+def add_new_student(
+        new_student: dict[str: str, str: list[int]],
+        all_students_list: list[dict[str: str, str: list[int]]]
+) -> str | list[dict[str: str, str: list[int]]]:
+    """
+    - Принимает словарь студента и список всех студентов
+    - Добавляет нового студента и возвращает измененный список студентов
+    """
+    all_students_list.append(new_student)
+
+    print(f'Добавлен новый студент - {new_student["name"]}')
+    return all_students_list
+
+def delete_worst_student(
+        student: dict[str: str, str: list[int]],
+        all_students_list: list[dict[str: str, str: list[int]]]
+) -> str | list[dict[str: str, str: list[int]]]:
+    """
+    - Принимает словарь студента и список всех студентов
+    - Удаляет худшего студента и возвращает измененный список студентов
+    """
+    all_students_list.remove(student)
+
+    print(f'Удален худший студент - {student["name"]}')
+    return all_students_list

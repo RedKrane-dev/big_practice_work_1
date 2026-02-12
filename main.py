@@ -1,52 +1,45 @@
-from utils import calculate_average, performance_assessment, calculate_average_all_students
-# 1
-students = [
-    {'name': 'Harry', 'grades': [80, 90, 78]},
-    {'name': 'Hermione', 'grades': [95, 90, 97]},
-    {'name': 'Ron', 'grades': [60, 70, 64]},
-    {'name': 'Draco', 'grades': [60, 75, 70]}
-]
+from utils import calculate_average, performance_assessment, calculate_average_all_students, get_student_info, \
+    add_new_student, delete_worst_student
 
 def main(all_students, new_student):
     worst_student = None
     worst_grades = 100
 
-    # 4
+    # Принт всех студентов
     print('Все студенты:')
     for student in all_students:
+        # Вычисление среднего балла студента
         average_grade = calculate_average(student["grades"])
+        # Оценка успешности студента
+        performance = performance_assessment(average_grade)
 
+        # Вычисление худшего студента
         if average_grade < worst_grades:
             worst_grades = average_grade
             worst_student = student
 
-        print(
-            f'Студент: {student["name"]}\n'
-            f'Средний балл: {average_grade}\n'
-            f'Статус: {performance_assessment(average_grade)}\n'
-        )
+        # Принт каждого студента
+        print(get_student_info(student['name'], average_grade, performance))
 
-    # 5
-    print(
-        f'Средний балл всех студентов:\n'
-        f'{calculate_average_all_students(all_students)}\n'
-    )
+    # Показ среднего балла всех студентов
+    calculate_average_all_students(all_students)
 
-    # 6
-    all_students.append(new_student)
-    print(
-        f'Добавлен новый студент - {new_student["name"]}\n'
-        f'Средний балл всех студентов:\n'
-        f'{calculate_average_all_students(all_students)}\n'
-    )
-    # 6
-    all_students.remove(worst_student)
-    print(
-        f'Удален худший студент - {worst_student["name"]}\n'
-        f'Средний балл всех студентов:\n'
-        f'{calculate_average_all_students(all_students)}\n'
-    )
+    # Добавление нового студента и показ среднего балла всех студентов
+    all_students = add_new_student(new_student, all_students)
+    calculate_average_all_students(all_students)
+
+    # Удаление худшего студента и показ среднего балла всех студентов
+    all_students = delete_worst_student(worst_student, all_students)
+    calculate_average_all_students(all_students)
 
 if __name__ == '__main__':
+    students = [
+        {'name': 'Harry', 'grades': [80, 90, 78]},
+        {'name': 'Hermione', 'grades': [95, 90, 97]},
+        {'name': 'Ron', 'grades': [60, 70, 64]},
+        {'name': 'Draco', 'grades': [60, 75, 70]}
+    ]
+
     student_to_list = {'name': 'Jinny', 'grades': [89, 88, 90]}
+
     main(students, student_to_list)
