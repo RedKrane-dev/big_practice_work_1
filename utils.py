@@ -1,20 +1,26 @@
-def calculate_average(grades: list[int]) -> float:
+def calculate_average(grades: list[int]) -> float | None:
     """
     Принимает список оценок студента и возвращает среднее значение
     """
-    result = sum(grades) / len(grades)
-    return round(result, 2)
+    try:
+        result = sum(grades) / len(grades)
+        return round(result, 2)
+    except ZeroDivisionError:
+        return None
+
 
 def performance_assessment(average_grade: float) -> str:
     """
     - Принимает средний балл студента
     - Если средний балл 75 и выше возвращает True иначе False
     """
-    if average_grade >= 75:
+    if not average_grade:
+        return 'Нет оценок'
+    elif average_grade >= 75:
         return 'Успешен'
     return 'Не успешен'
 
-def calculate_average_all_students(all_students_list: list[dict[str: str, str: list[int]]]) -> float:
+def calculate_average_all_students(all_students_list: list[dict[str, list[int]]]) -> float:
     """
     - Получает список всех студентов
     - Возвращает средний балл всех студентов
@@ -36,9 +42,9 @@ def get_student_info(student_name: str, avg_grade: float, performance: str) -> s
             f'Статус: {performance}\n')
 
 def add_new_student(
-        new_student: dict[str: str, str: list[int]],
-        all_students_list: list[dict[str: str, str: list[int]]]
-) -> str | list[dict[str: str, str: list[int]]]:
+        new_student: dict[str, list[int]],
+        all_students_list: list[dict[str, list[int]]]
+) -> str | list[dict[str, list[int]]]:
     """
     - Принимает словарь студента и список всех студентов
     - Добавляет нового студента и возвращает измененный список студентов
@@ -48,15 +54,15 @@ def add_new_student(
     print(f'Добавлен новый студент - {new_student["name"]}')
     return all_students_list
 
-def delete_worst_student(
-        student: dict[str: str, str: list[int]],
-        all_students_list: list[dict[str: str, str: list[int]]]
-) -> str | list[dict[str: str, str: list[int]]]:
+def delete_student(
+        student: dict[str, list[int]],
+        all_students_list: list[dict[str, list[int]]]
+) -> str | list[dict[str, list[int]]]:
     """
     - Принимает словарь студента и список всех студентов
-    - Удаляет худшего студента и возвращает измененный список студентов
+    - Удаляет студента и возвращает измененный список студентов
     """
     all_students_list.remove(student)
 
-    print(f'Удален худший студент - {student["name"]}')
+    print(f'Удален студент - {student["name"]}')
     return all_students_list

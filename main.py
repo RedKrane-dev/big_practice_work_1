@@ -1,5 +1,5 @@
 from utils import calculate_average, performance_assessment, calculate_average_all_students, get_student_info, \
-    add_new_student, delete_worst_student
+    add_new_student, delete_student
 
 def main(all_students, new_student):
     worst_student = None
@@ -14,7 +14,10 @@ def main(all_students, new_student):
         performance = performance_assessment(average_grade)
 
         # Вычисление худшего студента
-        if average_grade < worst_grades:
+        if not average_grade:
+            print(get_student_info(student['name'], avg_grade=0, performance=performance))
+            continue
+        elif average_grade < worst_grades:
             worst_grades = average_grade
             worst_student = student
 
@@ -29,7 +32,7 @@ def main(all_students, new_student):
     calculate_average_all_students(all_students)
 
     # Удаление худшего студента и показ среднего балла всех студентов
-    all_students = delete_worst_student(worst_student, all_students)
+    all_students = delete_student(worst_student, all_students)
     calculate_average_all_students(all_students)
 
 if __name__ == '__main__':
@@ -40,6 +43,6 @@ if __name__ == '__main__':
         {'name': 'Draco', 'grades': [60, 75, 70]}
     ]
 
-    student_to_list = {'name': 'Jinny', 'grades': [89, 88, 90]}
+    student_to_list = {'name': 'Jinny', 'grades': []}
 
     main(students, student_to_list)
