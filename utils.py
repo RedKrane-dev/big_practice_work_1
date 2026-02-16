@@ -12,7 +12,8 @@ def calculate_average(grades: list[int]) -> float | None:
 def performance_assessment(average_grade: float) -> str:
     """
     - Принимает средний балл студента
-    - Если средний балл 75 и выше возвращает True иначе False
+    - Если средний балл 75 и выше возвращает "Успешен" иначе "Не успешен"
+    - Если нет оценок возвращает "Нет оценок"
     """
     if not average_grade:
         return 'Нет оценок'
